@@ -1,13 +1,20 @@
 'use strict'
+let todos = []
 
 function addNewTask() {
   alert(`Didn't add a task!`)
+}
+
+function saveItem(item) {
+  todos.push(item)
+  chrome.storage.sync.set({ 'todoList': todos })
 }
 
 function taskToBeAdded() {
   let todoItem = document.createElement('li')
   todoItem.appendChild(document.createTextNode(this.value))
   todosList.appendChild(todoItem)
+  saveItem(todoItem)
 }
 
 const newTask = document.querySelector('.task')
