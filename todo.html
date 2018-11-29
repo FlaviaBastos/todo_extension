@@ -2,10 +2,26 @@
 <html>
   <head>
     <title>Todos</title>
-    <script src="todo.js"></script>
+      <style>
+        button {
+          height: 30px;
+          width: 100px;
+          outline: none;
+        }
+      </style>
   </head>
   <body>
-    <h3>Todo:</h3>
+    <h3>Todos:</h3>
+    <form class="newTask">
+      <input type="text" class="task" placeholder="New task">
+      <!-- <ul class="suggestions">
+        <li>Filter for a city</li>
+        <li>or a state</li>
+      </ul> -->
+    </form>
+    <div class="content">
+    </div>
     <button id="addNew">Add to list!</button>
+    <script src="todo.js"></script>
   </body>
 </html>

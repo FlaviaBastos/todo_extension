@@ -3,10 +3,20 @@
   "description" : "Base Level Extension",
   "version": "1.0",
   "manifest_version": 2,
+  "permissions": ["activeTab", "declarativeContent", "storage"],
   "browser_action": {
     "default_popup": "todo.html",
-    "default_icon": "todo.png"
+    "default_icon": "todo2.png",
+    "default_title": "Todo list"
   },
+  "icons": {
+    "128": "todo.png"
+  },
+  "background": {
+  "scripts": ["background.js"],
+  "persistent": false
+  },
+  "permissions": ["declarativeContent", "storage"],
   "commands": {
     "_execute_browser_action": {
       "suggested_key": {
