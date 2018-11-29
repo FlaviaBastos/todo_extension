@@ -1,24 +1,19 @@
 'use strict'
 
-// chrome.storage.sync.get('color', function (data) {
-//   alert(`COLOR IS... ${JSON.stringify(data)}`)
-//   changeColor.style.backgroundColor = data.color
-//   changeColor.setAttribute('value', data.color)
-// })
-
-
 function addNewTask() {
   alert(`Didn't add a task!`)
 }
 
 function taskToBeAdded() {
-  alert(`TASK: ${this.value}`)
-  fullList.innerHTML = this.value
+  let todoItem = document.createElement('li')
+  todoItem.appendChild(document.createTextNode(this.value))
+  todosList.appendChild(todoItem)
 }
 
 const newTask = document.querySelector('.task')
 const addNew = document.querySelector('#addNew')
-const fullList = document.querySelector('.content')
+// const fullList = document.querySelector('.content')
+const todosList = document.querySelector('ul')
 
 newTask.addEventListener('change', taskToBeAdded)
 addNew.addEventListener('click', addNewTask)
