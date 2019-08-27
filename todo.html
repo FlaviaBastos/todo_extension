@@ -3,23 +3,76 @@
   <head>
     <title>Todos</title>
       <style>
+        :root {
+          --dark: #BB0549;
+          --mid: #E02958;
+          --light: #FD5565;
+          --yellow: #FFD677;
+          --cream: #FFF1AF;
+          --white: #FFFFFF;
+          --main-color: var(--light);
+        }
+        h2 {
+          color: var(--dark);
+        }
+        body, input {
+        font-size: 18px;
+        font-family: sans-serif;
+        }
+        .container {
+          width: 360px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+        }
+        .info {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .content {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          align-self: flex-start;
+        }
+        .nav {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .task {
+          margin-right: 10px;
+        }
         ul {
           list-style-type: none;
+          padding-left: 10px;
         }
         button {
-          height: 30px;
-          width: 100px;
-          outline: none;
+          border: none;
+          border-radius: 25px;
+          background: var(--light);
+          padding: 10px;
+          font-size: 18px;
+          color: var(--cream); 
         }
       </style>
   </head>
   <body>
-    <h3>Todos:</h3>
-      <input type="text" class="task" placeholder="New task">
-    <div class="content">
+    <h2>Todos:</h2>
+    <div class="container">
+      <div class="info">
+        <input type="text" class="task" placeholder="New task">
+        <button id="addNew">Add to list</button>
+      </div>
+      <div class="content">
+          <ul class="items"></ul>
+      </div>
+      <div class="nav">
+        <button id="deleteList">Delete list</button>
+      </div>
     </div>
-    <ul></ul>
-    <button id="addNew">Add to list!</button>
     <script src="todo.js"></script>
   </body>
 </html>

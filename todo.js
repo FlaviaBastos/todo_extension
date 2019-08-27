@@ -1,26 +1,68 @@
 'use strict'
-let todos = []
 
-function addNewTask() {
-  alert(`Didn't add a task!`)
+document.addEventListener('DOMContentLoaded', function (event) {
+  displayItems()
+})
+
+function addNewTask () {
+  let text = newTask.value
+  let task = {
+    text: text,
+    done: false
+  } 
+  saveItem(task)
+  newTask.value = '';
 }
 
-function saveItem(item) {
-  todos.push(item)
-  chrome.storage.sync.set({ 'todoList': todos })
+function saveItem (item) {
+  chrome.storage.sync.get('todoList', function(data) {
+    data.todoList.push(item)
+    chrome.storage.sync.set(data, displayItems)
+  })
 }
 
-function taskToBeAdded() {
-  let todoItem = document.createElement('li')
-  todoItem.appendChild(document.createTextNode(this.value))
-  todosList.appendChild(todoItem)
-  saveItem(todoItem)
+function displayItems () {
+  chrome.storage.sync.get('todoList', function(data) {
+    let displayList = data.todoList;
+    if (typeof displayList !== 'undefined') {
+      todosList.innerHTML = displayList.map((item, i) => {
+        return `
+          <li>
+            <input type="checkbox" data-index=${i} id="item${i}" 
+             ${item.done ? 'checked' : ''} />
+            <label for="item${i}">
+              ${item.done ? `<del>${item.text}</del>` : item.text}
+            </label>
+          </li>
+        `;
+      }).join('');
+    } else {
+      chrome.storage.sync.set({todoList: []})
+    }
+  })
+}
+
+function toggleDone(e) {
+  const el = e.target;
+  const index = el.dataset.index;
+  chrome.storage.sync.get('todoList', function(data) {
+    let list = data.todoList;
+    list[index].done = !list[index].done;
+    chrome.storage.sync.set(data, displayItems)
+  })
+}
+
+function reset() {
+    chrome.storage.sync.remove('todoList', function(data){
+      todosList.innerHTML = ''
+    })
 }
 
 const newTask = document.querySelector('.task')
 const addNew = document.querySelector('#addNew')
-// const fullList = document.querySelector('.content')
-const todosList = document.querySelector('ul')
+const resetList = document.querySelector('#deleteList')
+const todosList = document.querySelector('.items')
 
-newTask.addEventListener('change', taskToBeAdded)
-addNew.addEventListener('click', addNewTask)
+addNew.addEventListener('click', addNewTask);
+resetList.addEventListener('click', reset);
+todosList.addEventListener('click', toggleDone);
